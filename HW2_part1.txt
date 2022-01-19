@@ -1,0 +1,109 @@
+CREATE TABLE DiseaseType(
+	id integer,
+	description varchar(140),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE Country(
+	cname varchar(50),
+	population bigint,
+	PRIMARY KEY (cname)
+);
+
+CREATE TABLE Disease(
+	disease_code varchar(50) PRIMARY KEY,
+	pathogen varchar(20),
+	description varchar(140),
+	id integer REFERENCES DiseaseType(id)
+);
+
+CREATE TABLE Discover(
+	cname varchar(50) REFERENCES Country(cname), 
+	disease_code varchar(50) REFERENCES Disease(disease_code), 
+	first_enc_date date,
+	PRIMARY KEY (cname, disease_code)
+);
+
+CREATE TABLE Users(
+	email varchar(60) PRIMARY KEY, 
+	name varchar(30), 
+	surname varchar(40), 
+	salary integer, 
+	phone varchar(20), 
+	cname varchar(50) REFERENCES Country(cname)
+);
+
+CREATE TABLE PublicServant(
+	email varchar(60) PRIMARY KEY REFERENCES Users(email), 
+	department varchar(50)
+);
+
+CREATE TABLE Doctor(
+	email varchar(60) PRIMARY KEY REFERENCES Users(email), 
+	degree varchar(20)
+);
+
+CREATE TABLE Specialize(
+	id integer REFERENCES DiseaseType(id), 
+	email varchar(60) REFERENCES Doctor(email),
+	PRIMARY KEY (id, email)
+);
+
+CREATE TABLE Record(
+	email varchar(60) REFERENCES PublicServant(email), 
+	cname varchar(50) REFERENCES Country(cname), 
+	disease_code varchar(50) REFERENCES DISEASE(disease_code), 
+	total_deaths integer, 
+	total_patients integer,
+	PRIMARY KEY (email, cname, disease_code)
+);
+
+INSERT INTO DiseaseType
+VALUES (1, 'infectious'),
+	   (2, 'deficiency'),
+	   (3, 'hereditary'),
+	   (4, 'physiological'),
+	   (5, 'virology'),
+	   (6, 'incurable'),
+	   (7, 'iatrogenic'), --caused by medical intervention
+	   (8, 'idiopathic'), --has an unknown cause or source
+	   (9, 'terminal'), --inevitable result of death
+	   (10, 'predisease')
+
+INSERT INTO Country
+VALUES ('United States', 333649395),
+	   ('India', 1398650612),
+	   ('Kazakhstan', 19086675),
+	   ('Turkey', 85588593),
+	   ('Argentina', 45765005),
+	   ('France', 65469059),
+	   ('Germany', 84147349),
+	   ('South Africa', 60342024),
+	   ('Canada', 38195987),
+	   ('Sweden', 10185200)
+
+INSERT INTO Disease
+VALUES ('covid-19', 'virus', 'A contagious disease caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2).', 5),
+	   ('A360', 'bacterium', 'A serious infection caused by strains of bacteria called Corynebacterium diphtheriae that make toxin (poison). It can lead to difficulty breathing, heart failure, paralysis, and even death.', 1),
+	   ('D571', -, 'Is a group of blood disorders typically inherited from parents. The most common type is known as sickle cell anaemia (SCA).', 3),
+	   ('E550', -, 'Is a condition that results in weak or soft bones in children. Symptoms include bowed legs, stunted growth, bone pain, large forehead, and trouble sleeping.', 2),
+	   ('covid-19', 'fungus', '', 5),
+	   ('covid-19', 'virus', '', 5),
+	   ('covid-19', 'virus', '', 5),
+	   ('covid-19', 'virus', '', 5),
+	   ('covid-19', 'virus', '', 5),
+	   ('covid-19', 'virus', '', 5)
+	    
+INSERT INTO Discover
+
+INSERT INTO Users
+
+INSERT INTO PublicServant
+
+INSERT INTO Doctor
+
+INSERT INTO DiseaseType
+
+INSERT INTO Specialize
+
+INSERT INTO Record
